@@ -22,6 +22,7 @@ public class Hand {
             }
             cards[num]= deck[position];
         }
+
         return cards;
     }
 
@@ -38,7 +39,34 @@ public class Hand {
 
     }
 
+    public Card[] sort(Card[] cards) {
+
+        Card temp;
+        int length;
+
+        if(cards[6]==null) {
+             length = 5;
+        }
+
+        else {
+             length = 7;
+        }
+
+        for(int i=1; i<length; i++) {
+            for (int inner=i; inner > 0; inner--) {
+                if (cards[inner].getValue() < cards[inner - 1].getValue()) {
+                    temp = cards[inner];
+                    cards[inner] = cards[inner - 1];
+                    cards[inner - 1] = temp;
+                }
+            }
+        }
+        return cards;
+    }
+
     public void createHand(int first, int second, int third, int fourth, int fifth){
 
     }
+
+
 }

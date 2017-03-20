@@ -21,6 +21,9 @@ public class Card {
         }
     }
 
+    public int getValue(){
+        return value;
+    }
     public boolean equals(Card secondCard){
 
         return positionInDeck()== secondCard.positionInDeck();

@@ -28,4 +28,15 @@ public class CardTest {
         Deck.noDublicates(52);
         assertEquals(false, Deck.noDublicates(52));
     }
+
+    @Test
+    public void sortTest(){
+        Hand hand = new Hand();
+        Card [] cards = hand.getRandomHand(5);
+
+        cards=hand.sort(cards);
+        for (Card c: cards) {
+            System.out.println(c);
+        }
+    }
 }
