@@ -19,7 +19,11 @@ public class My_Best_Random_Generator implements Random_Generator {
     }
 
     @Override
+<<<<<<< HEAD
     public void set_constants(long multiplier, long increment) {
+=======
+    public void set_constants(long const1, long const2) {
+>>>>>>> origin/master
         this.multiplier = multiplier;
         this.increment = increment;
     }
