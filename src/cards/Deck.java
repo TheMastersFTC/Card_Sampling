@@ -6,6 +6,7 @@ import java.util.HashSet;
  * Created by chloe on 3/14/2017.
  */
 public class Deck {
+    static HashSet<Integer> set = new HashSet<>();
     static final Card [] deck = new Card[52];
 
     static {
@@ -41,7 +42,7 @@ public class Deck {
      * @return
      */
     public static boolean noDublicates(int position){
-        HashSet<Integer> set = new HashSet<>();
+
         if(set.contains(position)==false){
             set.add(position);
             return true;

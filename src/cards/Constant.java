@@ -33,6 +33,5 @@ public class Constant {
         FULL_HOUSE, FLUSH, STRAIGHT, THREE_OF_A_KIND,
         TWO_PAIRS, SINGLE_PAIR, HIGH_CARD_ONLY;
     }
-
 }
 

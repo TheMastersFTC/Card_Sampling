@@ -22,10 +22,11 @@ public class Card {
     }
 
     public boolean equals(Card secondCard){
+
         return positionInDeck()== secondCard.positionInDeck();
     }
 
     public String toString(){
-        return "the suit is:" + suit + "the value is:" + positionInDeck();
+        return "the suit is: " + suit + "the value is: " + value;
     }
 }

@@ -13,16 +13,10 @@ public class Hand {
 
     public Card[] getRandomHand(int cardNum){
         int position;
-        int suit;
-        for(int num=0; num<cards.length; num++){
-//            suit=(int)(Math.random()*4);
-//            position=(int)(Math.random()*13);
-//            cards[num]= new Card(Constant.Suit.getSuit(suit), position);
+        for(int num=0; num<cardNum; num++){
 
             position = (int)(Math.random()*52);
-//            if(Deck.noDublicates(position)){
-//                cards[num] = deck [position];
-//            }
+
             while(Deck.noDublicates(position)==false){
                 position = (int)(Math.random()*52);
             }
@@ -37,6 +31,7 @@ public class Hand {
             hand1[num+2] = tableHand[num];
             hand2[num+2] = tableHand[num];
         }
+        // add more stuff
     }
 
     public void value(){
@@ -45,9 +40,5 @@ public class Hand {
 
     public void createHand(int first, int second, int third, int fourth, int fifth){
 
-    }
-
-    public String toString(){
-        return "";
     }
 }

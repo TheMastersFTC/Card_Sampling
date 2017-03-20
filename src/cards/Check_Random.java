@@ -29,8 +29,7 @@ import java.util.Arrays;
  *
  */
 
-public class Check_Random
-{
+public class Check_Random {
 
     // for testing only generate numbers between 0 and max_size
     private final int max_size                           = 10000;
@@ -176,7 +175,7 @@ public class Check_Random
     } // end check_random
 
     /**
-     * Test the check_random class with a random number generator
+     * CardTest the check_random class with a random number generator
      */
     public static void main(String[] args)
     {
