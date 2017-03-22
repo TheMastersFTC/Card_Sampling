@@ -52,7 +52,7 @@ public class Hand {
 
     public ArrayList<Card> getRandomHand(int cardNum){
         int position;
-        
+
         for(int num=0; num<cardNum; num++){
 
             position = (int)(Math.random()*52);
@@ -93,14 +93,14 @@ public class Hand {
     public void checkHandRank(){
 
         //Royal flush.
-        if((histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0) 
-        		&&
-        		(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+        if(histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0
+                &&
+                (cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
                         && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
-        		||
-        		((cards.size()==7) &&
-        		(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
+                ||
+                ((cards.size()==7) &&
+                        (cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                                && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
 
             //If the royal flush is the first five cards:
             if(cards.size() == 5) {
@@ -118,16 +118,8 @@ public class Hand {
         }
 
         //Straight flush.
-        else if(((longestStraight() == 5) 
-        		&&
-        		(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
-                        && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
-        		||
-        		(cards.size() == 7) 
-        		&&
-        		(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
-        	
+        else if(longestStraight() == 5) {
+
             suitSort();
 
             //If the straight flush is the first five cards:
@@ -143,20 +135,20 @@ public class Hand {
                         || cards.get(2).getSuit().equals(cards.get(5).getSuit()))
                         &&
                         (cards.get(3).getSuit().equals(cards.get(4).getSuit())
-                        || cards.get(3).getSuit().equals(cards.get(5).getSuit())
-                        ||cards.get(3).getSuit().equals(cards.get(6).getSuit())))) {
+                                || cards.get(3).getSuit().equals(cards.get(5).getSuit())
+                                ||cards.get(3).getSuit().equals(cards.get(6).getSuit())))) {
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
-                
+
                 else {
-                	rank = Constant.Ranks.STRAIGHT;
+                    rank = Constant.Ranks.STRAIGHT;
                 }
             }
 
             else {
-            	rank = Constant.Ranks.STRAIGHT;
+                rank = Constant.Ranks.STRAIGHT;
             }
-            
+
         }
 
         //Four of a kind.
@@ -183,10 +175,10 @@ public class Hand {
             if(hasTwoPair && hasThreePair) {
                 rank = Constant.Ranks.FULL_HOUSE;
             }
-            
+
             //Otherwise, it is a three of a kind.
             else {
-            	rank = Constant.Ranks.THREE_OF_A_KIND;
+                rank = Constant.Ranks.THREE_OF_A_KIND;
             }
         }
 
@@ -194,10 +186,15 @@ public class Hand {
         else if((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
                 && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
                 ||
-        		((cards.size()==7) &&
-        				cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit()))) {
-        	
+                ((cards.size()==7) &&
+                        ((cards.get(2).getSuit().equals(cards.get(3).getSuit())
+                                || cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                                || cards.get(2).getSuit().equals(cards.get(5).getSuit()))
+                                &&
+                                (cards.get(3).getSuit().equals(cards.get(4).getSuit())
+                                        || cards.get(3).getSuit().equals(cards.get(5).getSuit())
+                                        ||cards.get(3).getSuit().equals(cards.get(6).getSuit()))))) {
+
             rank = Constant.Ranks.FLUSH;
         }
 
@@ -236,18 +233,18 @@ public class Hand {
         int tempLength = 0;
 
         for(int index=0; index<histogram.length-1; index++) {
-        	
+
             if(histogram[index] > 0 && histogram[index+1] > 0) {
-            	tempLength++;
+                tempLength++;
                 if(tempLength > longestStraight) {
-                	longestStraight = tempLength;
+                    longestStraight = tempLength;
                 }
             }
-            
+
             else {
-            	tempLength = 0;
+                tempLength = 0;
             }
-            
+
         }
 
         return longestStraight + 1;
