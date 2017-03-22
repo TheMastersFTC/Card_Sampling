@@ -113,14 +113,16 @@ public class Hand {
     public void checkHandRank(){
 
         //Royal flush.
-        if(histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0
+        if((histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0)
                 &&
-                (cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
-                        && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
+                ((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                        && (cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()) && cards.size() !=7)))
                 ||
-                ((cards.size()==7) &&
+                (((cards.size()==7) &&
                         (cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                                && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
+                                && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())) 
+                        &&
+                        (cards.get(0).getValue() == 10) || cards.get(2).getValue() == 10))) {
 
             //If the royal flush is the first five cards:
             if(cards.size() == 5) {
@@ -138,7 +140,7 @@ public class Hand {
         }
 
         //Straight flush.
-        else if(longestStraight() == 5) {
+        else if(longestStraight() == 5 ) {
 
             suitSort();
 
@@ -157,7 +159,9 @@ public class Hand {
                         (cards.get(3).getSuit().equals(cards.get(4).getSuit())
                                 || cards.get(3).getSuit().equals(cards.get(5).getSuit())
                                 ||cards.get(3).getSuit().equals(cards.get(6).getSuit())))) {
+                	
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
+                
                 }
 
                 else {
@@ -219,7 +223,7 @@ public class Hand {
             }
 
             //For two pairs:
-            if(numberOfPairs == 2) {
+            if(numberOfPairs >= 2) {
                 rank = Constant.Ranks.TWO_PAIRS;
             }
 
@@ -360,7 +364,7 @@ public class Hand {
 
             //For seven card hands:
             else {
-                for(int index=6; index>=0; index--) {
+                for(int index=6; index>=2; index--) {
 
                     /*Start at the end and compare to the next card; if the next card is one less
                     and of the same suit, check the NEXT card; if this is also the case, then you
