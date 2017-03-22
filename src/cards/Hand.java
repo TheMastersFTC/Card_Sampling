@@ -128,7 +128,6 @@ public class Hand {
                 rank = Constant.Ranks.STRAIGHT_FLUSH;
             }
 
-            //FIXME
             //If the straight flush is in a seven card hand, check to see if it is at the end of the hand:
             else if(cards.size() == 7) {
                 if(((cards.get(2).getSuit().equals(cards.get(3).getSuit())
@@ -140,14 +139,16 @@ public class Hand {
                         ||cards.get(3).getSuit().equals(cards.get(6).getSuit())))) {
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
+                
+                else {
+                	rank = Constant.Ranks.STRAIGHT;
+                }
+            }
+
+            else {
+            	rank = Constant.Ranks.STRAIGHT;
             }
             
-            
-            //Otherwise, this is a straight,
-            else {
-                    rank = Constant.Ranks.STRAIGHT;
-                }
-    
         }
 
         //Four of a kind.
@@ -182,12 +183,18 @@ public class Hand {
         }
 
         //Flush.
-        else if(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
-                && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit())
+        else if((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
                 ||
         		((cards.size()==7) &&
-        		(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
+        				((cards.get(2).getSuit().equals(cards.get(3).getSuit())
+                                || cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                                || cards.get(2).getSuit().equals(cards.get(5).getSuit()))
+                                &&
+                                (cards.get(3).getSuit().equals(cards.get(4).getSuit())
+                                || cards.get(3).getSuit().equals(cards.get(5).getSuit())
+                                ||cards.get(3).getSuit().equals(cards.get(6).getSuit()))))) {
+        	
             rank = Constant.Ranks.FLUSH;
         }
 
