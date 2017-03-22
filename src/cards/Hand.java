@@ -293,9 +293,10 @@ public class Hand {
         //For a four of a kind.
         else if(rank == Constant.Ranks.FOUR_OF_A_KIND) {
 
-            for(int index=13; index>0; index--) {
+            for(int index=13; index>=0; index--) {
                 if(histogram[index] == 4) {
                     value = index + 1;
+                    break;
                 }
             }
         }
@@ -303,9 +304,10 @@ public class Hand {
         //For a full house.
         else if(rank == Constant.Ranks.FULL_HOUSE) {
 
-            for(int index=13; index>0; index--) {
+            for(int index=13; index>=0; index--) {
                 if(histogram[index] == 3) {
                     value = index + 1;
+                    break;
                 }
             }
         }
