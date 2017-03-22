@@ -52,7 +52,7 @@ public class Hand {
 
     public ArrayList<Card> getRandomHand(int cardNum){
         int position;
-        
+        int suit;
         for(int num=0; num<cardNum; num++){
 
             position = (int)(Math.random()*52);
@@ -114,6 +114,7 @@ public class Hand {
 
         //Straight flush.
         else if(longestStraight() == 5) {
+        	
             suitSort();
 
             //If the straight flush is the first five cards:
@@ -122,6 +123,7 @@ public class Hand {
                 rank = Constant.Ranks.STRAIGHT_FLUSH;
             }
 
+            //FIXME
             //If the straight flush is in a seven card hand, check to see if it is at the end of the hand:
             else if(cards.size() == 7) {
                 if(((cards.get(2).getSuit().equals(cards.get(3).getSuit())
@@ -163,7 +165,9 @@ public class Hand {
         }
 
         //Flush.
-        else if(cards.get(0).getSuit().equals(cards.get(1).getSuit().equals(cards.get(2).getSuit().equals(cards.get(3).getSuit())))) {
+        //FIXME for seven cards
+        else if(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit())) {
             rank = Constant.Ranks.FLUSH;
         }
 
@@ -208,10 +212,10 @@ public class Hand {
 
     public int longestStraight() {
 
-        int longestStraight = 0;
+        int longestStraight = 1;
 
-        for(int index=0; index<histogram.length; index++) {
-            if(histogram[index]>0) {
+        for(int index=0; index<histogram.length-1; index++) {
+            if(histogram[index]>0 && histogram[index+1] > 0) {
                 longestStraight++;
             }
         }
@@ -293,10 +297,9 @@ public class Hand {
         //For a four of a kind.
         else if(rank == Constant.Ranks.FOUR_OF_A_KIND) {
 
-            for(int index=13; index>=0; index--) {
+            for(int index=13; index>0; index--) {
                 if(histogram[index] == 4) {
                     value = index + 1;
-                    break;
                 }
             }
         }
@@ -304,10 +307,9 @@ public class Hand {
         //For a full house.
         else if(rank == Constant.Ranks.FULL_HOUSE) {
 
-            for(int index=13; index>=0; index--) {
+            for(int index=13; index>0; index--) {
                 if(histogram[index] == 3) {
                     value = index + 1;
-                    break;
                 }
             }
         }
