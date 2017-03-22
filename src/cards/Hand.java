@@ -187,13 +187,8 @@ public class Hand {
                 && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
                 ||
         		((cards.size()==7) &&
-        				((cards.get(2).getSuit().equals(cards.get(3).getSuit())
-                                || cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                                || cards.get(2).getSuit().equals(cards.get(5).getSuit()))
-                                &&
-                                (cards.get(3).getSuit().equals(cards.get(4).getSuit())
-                                || cards.get(3).getSuit().equals(cards.get(5).getSuit())
-                                ||cards.get(3).getSuit().equals(cards.get(6).getSuit()))))) {
+        				cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit()))) {
         	
             rank = Constant.Ranks.FLUSH;
         }
