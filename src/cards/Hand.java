@@ -15,6 +15,7 @@ public class Hand {
     Card [] hand2 = new Card[7];
 
     int [] histogram= new int[14];
+    int [] suitHistogram = new int[4];
 
     Constant.Ranks rank;
     double value;
@@ -87,6 +88,25 @@ public class Hand {
         for(Card card : cards) {
             histogram[card.getValue()-1] += 1;
         }
+        
+        //Build the suit histogram.
+        for(Card card : cards) {
+        	
+        	if(card.getSuit() == Constant.Suit.CLUB) {
+        		suitHistogram[card.getSuit().ordinal()]++;
+        	}
+        	if(card.getSuit() == Constant.Suit.DIAMOND) {
+        		suitHistogram[card.getSuit().ordinal()]++;
+        	}
+        	if(card.getSuit() == Constant.Suit.HEART) {
+        		suitHistogram[card.getSuit().ordinal()]++;
+        	}
+        	if(card.getSuit() == Constant.Suit.SPADE) {
+        		suitHistogram[card.getSuit().ordinal()]++;
+        	}
+        	
+        }
+        
         this.checkHandRank();
     }
 
@@ -183,18 +203,7 @@ public class Hand {
         }
 
         //Flush.
-        else if((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
-                && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
-                ||
-                ((cards.size()==7) &&
-                        ((cards.get(2).getSuit().equals(cards.get(3).getSuit())
-                                || cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                                || cards.get(2).getSuit().equals(cards.get(5).getSuit()))
-                                &&
-                                (cards.get(3).getSuit().equals(cards.get(4).getSuit())
-                                        || cards.get(3).getSuit().equals(cards.get(5).getSuit())
-                                        ||cards.get(3).getSuit().equals(cards.get(6).getSuit()))))) {
-
+        else if(suitHistogram[0] >= 5 || suitHistogram[1] >= 5 || suitHistogram[2] >= 5 || suitHistogram[3] >= 5) {
             rank = Constant.Ranks.FLUSH;
         }
 
