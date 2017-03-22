@@ -52,7 +52,7 @@ public class Hand {
 
     public ArrayList<Card> getRandomHand(int cardNum){
         int position;
-        
+        int suit;
         for(int num=0; num<cardNum; num++){
 
             position = (int)(Math.random()*52);
@@ -113,8 +113,7 @@ public class Hand {
         }
 
         //Straight flush.
-        else if(longestStraight() == 5) {
-        	
+        else if(longestStraight() >= 5) {
             suitSort();
 
             //If the straight flush is the first five cards:
@@ -123,7 +122,6 @@ public class Hand {
                 rank = Constant.Ranks.STRAIGHT_FLUSH;
             }
 
-            //FIXME
             //If the straight flush is in a seven card hand, check to see if it is at the end of the hand:
             else if(cards.size() == 7) {
                 if(((cards.get(2).getSuit().equals(cards.get(3).getSuit())
@@ -143,7 +141,7 @@ public class Hand {
             rank = Constant.Ranks.FOUR_OF_A_KIND;
         }
 
-        //Full house.
+        //Full house/ Three of a kind
         else if(largestGroup() == 3) {
 
             boolean hasThreePair = false;
@@ -162,12 +160,13 @@ public class Hand {
             if(hasTwoPair && hasThreePair) {
                 rank = Constant.Ranks.FULL_HOUSE;
             }
+            else{
+                rank = Constant.Ranks.THREE_OF_A_KIND;
+            }
         }
 
         //Flush.
-        //FIXME for seven cards
-        else if(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
-                && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit())) {
+        else if(cards.get(0).getSuit().equals(cards.get(1).getSuit().equals(cards.get(2).getSuit().equals(cards.get(3).getSuit())))) {
             rank = Constant.Ranks.FLUSH;
         }
 
@@ -176,10 +175,6 @@ public class Hand {
             rank = Constant.Ranks.STRAIGHT;
         }
 
-        //Three of a kind.
-        else if(largestGroup() == 3) {
-            rank = Constant.Ranks.THREE_OF_A_KIND;
-        }
 
         //Two pair AND one pair.
         else if(largestGroup() == 2) {
@@ -212,16 +207,22 @@ public class Hand {
 
     public int longestStraight() {
 
-        int longestStraight = 1;
+        int longestStraight = 0;
 
-        for(int index=0; index<histogram.length-1; index++) {
-            if(histogram[index]>0 && histogram[index+1] > 0) {
+        for(int index=0; index<histogram.length; index++) {
+            if(histogram[index]>0) {
                 longestStraight++;
             }
         }
-
         return longestStraight;
+    }
 
+    public int largestInOrderCount(){
+        int straightCount=0;
+        if(longestStraight()==5 || longestStraight()==7){
+
+        }
+        return straightCount;
     }
 
     public int largestGroup() {
