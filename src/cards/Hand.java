@@ -93,7 +93,7 @@ public class Hand {
     public void checkHandRank(){
 
         //Royal flush.
-        if(histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0 
+        if((histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0) 
         		&&
         		(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
                         && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
@@ -118,7 +118,15 @@ public class Hand {
         }
 
         //Straight flush.
-        else if(longestStraight() == 5) {
+        else if(((longestStraight() == 5) 
+        		&&
+        		(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                        && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
+        		||
+        		(cards.size() == 7) 
+        		&&
+        		(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
         	
             suitSort();
 
