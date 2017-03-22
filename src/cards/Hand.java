@@ -46,6 +46,8 @@ public class Hand {
         cards.add(seven);
 
         this.sort();
+        this.rank();
+        this.value();
     }
 
     public ArrayList<Card> getRandomHand(int cardNum){
@@ -112,6 +114,7 @@ public class Hand {
 
         //Straight flush.
         else if(longestStraight() == 5) {
+            suitSort();
 
             //If the straight flush is the first five cards:
             if(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
@@ -121,8 +124,13 @@ public class Hand {
 
             //If the straight flush is in a seven card hand, check to see if it is at the end of the hand:
             else if(cards.size() == 7) {
-                if(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())) {
+                if(((cards.get(2).getSuit().equals(cards.get(3).getSuit())
+                        || cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                        || cards.get(2).getSuit().equals(cards.get(5).getSuit()))
+                        &&
+                        (cards.get(3).getSuit().equals(cards.get(4).getSuit())
+                        || cards.get(3).getSuit().equals(cards.get(5).getSuit())
+                        ||cards.get(3).getSuit().equals(cards.get(6).getSuit())))) {
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
             }
@@ -206,9 +214,6 @@ public class Hand {
             if(histogram[index]>0) {
                 longestStraight++;
             }
-            else {
-                longestStraight = 0;
-            }
         }
 
         return longestStraight;
@@ -267,7 +272,7 @@ public class Hand {
 
             //For seven card hands:
             else {
-                for(int index=6; index>=0; index--) {
+                for(int index=6; index>0; index--) {
 
                     /*Start at the end and compare to the next card; if the next card is one less
                     and of the same suit, check the NEXT card; if this is also the case, then you
@@ -288,7 +293,7 @@ public class Hand {
         //For a four of a kind.
         else if(rank == Constant.Ranks.FOUR_OF_A_KIND) {
 
-            for(int index=13; index<histogram.length; index--) {
+            for(int index=13; index>0; index--) {
                 if(histogram[index] == 4) {
                     value = index + 1;
                 }
@@ -298,7 +303,7 @@ public class Hand {
         //For a full house.
         else if(rank == Constant.Ranks.FULL_HOUSE) {
 
-            for(int index=13; index<histogram.length; index--) {
+            for(int index=13; index>0; index--) {
                 if(histogram[index] == 3) {
                     value = index + 1;
                 }
@@ -352,7 +357,7 @@ public class Hand {
 
         else if(rank == Constant.Ranks.THREE_OF_A_KIND) {
 
-            for(int index=13; index<histogram.length; index--) {
+            for(int index=13; index>0; index--) {
                 if(histogram[index] == 3) {
                     value = index + 1;
                 }
@@ -361,7 +366,7 @@ public class Hand {
 
         else if(rank == Constant.Ranks.SINGLE_PAIR || rank == Constant.Ranks.TWO_PAIRS) {
 
-            for(int index=13; index<histogram.length; index--) {
+            for(int index=13; index>0; index--) {
                 if(histogram[index] == 2) {
                     value = index + 1;
                 }
@@ -378,11 +383,22 @@ public class Hand {
     public void sort() {
 
         Card temp;
-        int length;
-
         for(int i=1; i<cards.size(); i++) {
             for (int inner = i; inner > 0; inner--) {
                 if (cards.get(inner).getValue() < cards.get(inner - 1).getValue()) {
+                    temp = cards.get(inner);
+                    cards.set(inner, cards.get(inner-1));
+                    cards.set(inner - 1,temp);
+                }
+            }
+        }
+    }
+
+    public void suitSort(){
+        Card temp;
+        for(int i=1; i<cards.size(); i++) {
+            for (int inner = i; inner > 0; inner--) {
+                if (cards.get(inner).getSuit().getMultiplier() < cards.get(inner - 1).getSuit().getMultiplier()) {
                     temp = cards.get(inner);
                     cards.set(inner, cards.get(inner-1));
                     cards.set(inner - 1,temp);
