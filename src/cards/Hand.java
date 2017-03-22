@@ -174,6 +174,11 @@ public class Hand {
             if(hasTwoPair && hasThreePair) {
                 rank = Constant.Ranks.FULL_HOUSE;
             }
+            
+            //Otherwise, it is a three of a kind.
+            else {
+            	rank = Constant.Ranks.THREE_OF_A_KIND;
+            }
         }
 
         //Flush.
@@ -181,11 +186,6 @@ public class Hand {
         else if(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
                 && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit())) {
             rank = Constant.Ranks.FLUSH;
-        }
-
-        //Three of a kind.
-        else if(largestGroup() == 3) {
-            rank = Constant.Ranks.THREE_OF_A_KIND;
         }
 
         //Two pair AND one pair.
