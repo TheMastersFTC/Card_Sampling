@@ -166,7 +166,8 @@ public class Hand {
         }
 
         //Flush.
-        else if(cards.get(0).getSuit().equals(cards.get(1).getSuit().equals(cards.get(2).getSuit().equals(cards.get(3).getSuit())))) {
+        else if(cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit())) {
             rank = Constant.Ranks.FLUSH;
         }
 
