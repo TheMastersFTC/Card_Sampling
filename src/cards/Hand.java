@@ -52,7 +52,7 @@ public class Hand {
 
     public ArrayList<Card> getRandomHand(int cardNum){
         int position;
-        int suit;
+        
         for(int num=0; num<cardNum; num++){
 
             position = (int)(Math.random()*52);
