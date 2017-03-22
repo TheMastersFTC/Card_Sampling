@@ -21,15 +21,21 @@ public class Card {
         }
     }
 
-    public int getValue(){
-        return value;
-    }
-    public boolean equals(Card secondCard){
+    public int getValue() {
 
+        return value;
+
+    }
+
+    public Constant.Suit getSuit() {
+        return suit;
+    }
+
+    public boolean equals(Card secondCard){
         return positionInDeck()== secondCard.positionInDeck();
     }
 
     public String toString(){
-        return "the suit is: " + suit + "the value is: " + value;
+        return "the suit is:" + suit + "the value is:" + value;
     }
 }
