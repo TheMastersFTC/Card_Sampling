@@ -102,10 +102,6 @@ public class Hand {
             this.cards.add(deck[position]);
         }
 
-        this.sort();
-        this.rank();
-        this.value();
-
         return this.cards;
     }
 
