@@ -7,7 +7,8 @@ import java.util.ArrayList;
 import static junit.framework.TestCase.assertEquals;
 
 /**
- * Created by chloe on 3/20/2017.
+ * Created by chloe Josien and Kylee fluckiger
+ * tests the card and hand classes
  */
 public class CardTest {
 
@@ -26,11 +27,12 @@ public class CardTest {
 //
 //    }
 
-    @Test
-    public void isDuplicate(){
-        Deck.noDublicates(52);
-        assertEquals(false, Deck.noDublicates(52));
-    }
+//    @Test
+//    public void isDuplicate(){
+//        Hand hand = new Hand();
+//        hand.noDuplicates(52);
+//        assertEquals(false, hand.noDuplicates(52));
+//    }
 
 //    @Test
 //    public void histogramTest() {
