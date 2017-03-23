@@ -6,7 +6,8 @@ import java.util.HashSet;
 import static cards.Deck.deck;
 
 /**
- * Created by chloe on 3/14/2017.
+ * Created by chloe Josien and Kylee Fluckiger
+ * this class creates random hands and ranks the hands
  */
 public class Hand {
 
@@ -20,16 +21,26 @@ public class Hand {
 
     Constant.Ranks rank;
     double value;
-    
-    public Hand() {
-    	
-    }
 
+
+    /**
+     * creates a random hand of cardNum
+     * @param cardNum - number of cards in the hand
+     */
     public Hand(int cardNum) {
 
         cards = this.getRandomHand(cardNum);
     }
 
+    /**
+     * creates a five card hand and sorts, ranks, and finds the value
+     * 
+     * @param one - the first card
+     * @param two - the second card
+     * @param three - the third card
+     * @param four - the forth card
+     * @param five - the fifth card
+     */
     public Hand (Card one, Card two, Card three, Card four, Card five){
         cards.add(one);
         cards.add(two);
@@ -42,6 +53,17 @@ public class Hand {
         this.value();
     }
 
+    /**
+     * creates a seven card hand
+     * 
+     * @param one - the first card
+     * @param two - the second card
+     * @param three - the third card
+     * @param four - the forth card
+     * @param five - the fifth card
+     * @param six - the sixth card
+     * @param seven the seventh card
+     */
     public Hand (Card one, Card two, Card three, Card four, Card five, Card six, Card seven){
         cards.add(one);
         cards.add(two);
@@ -56,6 +78,12 @@ public class Hand {
         this.value();
     }
 
+    /**
+     * creates a random hand of cardNum size
+     * 
+     * @param cardNum - the number of cards in the hand
+     * @return - the cards
+     */
     public ArrayList<Card> getRandomHand(int cardNum){
         int position;
 
@@ -66,17 +94,17 @@ public class Hand {
             while(this.noDuplicates(position)==false){
                 position = (int)(Math.random()*52);
             }
-            
+
             this.cards.add(deck[position]);
         }
 
         this.sort();
         this.rank();
         this.value();
-        
+
         return this.cards;
     }
-    
+
     /**
      * checks to see if the position was already added in the set
      * returns true if the position was added.
@@ -85,7 +113,7 @@ public class Hand {
      * @return
      */
     public boolean noDuplicates(int position){
-    	
+
         HashSet<Integer> set = new HashSet<>();
 
 
@@ -96,6 +124,12 @@ public class Hand {
         return false;
     }
 
+    /**
+     * creates two random hands for texas hold'em 
+     * 
+     * @param hand1
+     * @param hand2
+     */
     public void getTwoRandomHands(Card [] hand1, Card [] hand2){
         ArrayList<Card> tableHand = getRandomHand(7);
         for(int num=0; num<tableHand.size(); num++){
@@ -106,34 +140,40 @@ public class Hand {
         this.hand2=hand2;
     }
 
+    /**
+     * ranks the cards in a hand
+     */
     public void rank() {
 
         //Build the histogram of the hand.
         for(Card card : cards) {
             histogram[card.getValue()-1] += 1;
         }
-        
+
         //Build the suit histogram.
         for(Card card : cards) {
-        	
-        	if(card.getSuit() == Constant.Suit.CLUB) {
-        		suitHistogram[card.getSuit().ordinal()]++;
-        	}
-        	if(card.getSuit() == Constant.Suit.DIAMOND) {
-        		suitHistogram[card.getSuit().ordinal()]++;
-        	}
-        	if(card.getSuit() == Constant.Suit.HEART) {
-        		suitHistogram[card.getSuit().ordinal()]++;
-        	}
-        	if(card.getSuit() == Constant.Suit.SPADE) {
-        		suitHistogram[card.getSuit().ordinal()]++;
-        	}
-        	
+
+            if(card.getSuit() == Constant.Suit.CLUB) {
+                suitHistogram[card.getSuit().ordinal()]++;
+            }
+            if(card.getSuit() == Constant.Suit.DIAMOND) {
+                suitHistogram[card.getSuit().ordinal()]++;
+            }
+            if(card.getSuit() == Constant.Suit.HEART) {
+                suitHistogram[card.getSuit().ordinal()]++;
+            }
+            if(card.getSuit() == Constant.Suit.SPADE) {
+                suitHistogram[card.getSuit().ordinal()]++;
+            }
+
         }
-        
+
         this.checkHandRank();
     }
 
+    /**
+     * checks each type of rank to see if that is in our hand
+     */
     public void checkHandRank(){
 
         //Royal flush.
@@ -144,28 +184,28 @@ public class Hand {
                 &&
                 cards.size() == 5) {
 
-                rank = Constant.Ranks.ROYAL_FLUSH;
-                return;
+            rank = Constant.Ranks.ROYAL_FLUSH;
+            return;
 
         }
-        
+
         //Royal flush for seven card hands.
         if(((histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0)
-        	&& cards.size() == 7)
-        	&&
-        	(((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
-                    && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
-        	||
-        	(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-		            && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))
-        	||
-        	(cards.get(1).getSuit().equals(cards.get(2).getSuit()) && cards.get(1).getSuit().equals(cards.get(3).getSuit())
-                        && cards.get(1).getSuit().equals(cards.get(4).getSuit()) && cards.get(1).getSuit().equals(cards.get(5).getSuit())))) {
+                && cards.size() == 7)
+                &&
+                (((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                        && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
+                        ||
+                        (cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                                && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))
+                        ||
+                        (cards.get(1).getSuit().equals(cards.get(2).getSuit()) && cards.get(1).getSuit().equals(cards.get(3).getSuit())
+                                && cards.get(1).getSuit().equals(cards.get(4).getSuit()) && cards.get(1).getSuit().equals(cards.get(5).getSuit())))) {
 
-			rank = Constant.Ranks.ROYAL_FLUSH;
-			  
+            rank = Constant.Ranks.ROYAL_FLUSH;
+
         }
-        	
+
 
         //Straight flush.
         else if(longestStraight() >= 5 ) {
@@ -182,31 +222,31 @@ public class Hand {
             else if(cards.size() == 7) {
                 if((cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
                         && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit()))
-                		&&
-                		(((cards.get(2).getValue() == (cards.get(3).getValue()-1) && cards.get(3).getValue() == (cards.get(4).getValue()-1)
+                        &&
+                        (((cards.get(2).getValue() == (cards.get(3).getValue()-1) && cards.get(3).getValue() == (cards.get(4).getValue()-1)
                                 && cards.get(4).getValue() == (cards.get(5).getValue()-1) && cards.get(5).getValue() == (cards.get(6).getValue()-1))))) {
-                	
+
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
-                
+
                 else if((cards.get(1).getSuit().equals(cards.get(2).getSuit()) && cards.get(1).getSuit().equals(cards.get(3).getSuit())
                         && cards.get(1).getSuit().equals(cards.get(4).getSuit()) && cards.get(1).getSuit().equals(cards.get(5).getSuit()))
-                		&&
-                		((cards.get(1).getValue() == (cards.get(2).getValue()-1) && cards.get(2).getValue() == (cards.get(3).getValue()-1)
+                        &&
+                        ((cards.get(1).getValue() == (cards.get(2).getValue()-1) && cards.get(2).getValue() == (cards.get(3).getValue()-1)
                                 && cards.get(3).getValue() == (cards.get(4).getValue()-1) && cards.get(4).getValue() == (cards.get(5).getValue()-1)))) {
-                	
+
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
 
                 else {
-                	
-                	if(suitHistogram[0] >= 5 || suitHistogram[1] >= 5 || suitHistogram[2] >= 5 || suitHistogram[3] >= 5) {
-                		rank = Constant.Ranks.FLUSH;
-                	}
-                	
-                	else {
-                		rank = Constant.Ranks.STRAIGHT;
-                	}
+
+                    if(suitHistogram[0] >= 5 || suitHistogram[1] >= 5 || suitHistogram[2] >= 5 || suitHistogram[3] >= 5) {
+                        rank = Constant.Ranks.FLUSH;
+                    }
+
+                    else {
+                        rank = Constant.Ranks.STRAIGHT;
+                    }
                 }
             }
 
@@ -276,13 +316,14 @@ public class Hand {
 
         //Otherwise, it is a high-card hand.
         else {
-
-        		rank = Constant.Ranks.HIGH_CARD_ONLY;
-        	
+            rank = Constant.Ranks.HIGH_CARD_ONLY;
         }
-
     }
 
+    /**
+     * finds the longest straight in a hand
+     * @return - how long the straight is
+     */
     public int longestStraight() {
 
         int longestStraight = 0;
@@ -302,11 +343,13 @@ public class Hand {
             }
 
         }
-
         return longestStraight + 1;
-
     }
 
+    /**
+     * finds the largest group in the histogram
+     * @return - the value of the largest group
+     */
     public int largestGroup() {
 
         int largestGroup = 0;
@@ -320,6 +363,9 @@ public class Hand {
         return largestGroup;
     }
 
+    /**
+     * finds the value for each type of hand with a certain rank
+     */
     public void value(){
 
         //For royal flush 7-card tiebreakers.
@@ -467,6 +513,9 @@ public class Hand {
 
     }
 
+    /**
+     * sorts the hand by value
+     */
     public void sort() {
 
         Card temp;
@@ -481,6 +530,9 @@ public class Hand {
         }
     }
 
+    /**
+     * sorts the hand by suit
+     */
     public void suitSort(){
         Card temp;
         for(int i=1; i<cards.size(); i++) {
