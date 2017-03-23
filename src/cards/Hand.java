@@ -1,6 +1,7 @@
 package cards;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static cards.Deck.deck;
 
@@ -19,6 +20,10 @@ public class Hand {
 
     Constant.Ranks rank;
     double value;
+    
+    public Hand() {
+    	
+    }
 
     public Hand(int cardNum) {
 
@@ -58,18 +63,37 @@ public class Hand {
 
             position = (int)(Math.random()*52);
 
-            while(Deck.noDublicates(position)==false){
+            while(this.noDuplicates(position)==false){
                 position = (int)(Math.random()*52);
             }
-            cards.add(deck[position]);
+            
+            this.cards.add(deck[position]);
         }
 
         this.sort();
-
-        this.value();
         this.rank();
+        this.value();
+        
+        return this.cards;
+    }
+    
+    /**
+     * checks to see if the position was already added in the set
+     * returns true if the position was added.
+     *
+     * @param position
+     * @return
+     */
+    public boolean noDuplicates(int position){
+    	
+        HashSet<Integer> set = new HashSet<>();
 
-        return cards;
+
+        if(set.contains(position)==false){
+            set.add(position);
+            return true;
+        }
+        return false;
     }
 
     public void getTwoRandomHands(Card [] hand1, Card [] hand2){
@@ -121,6 +145,7 @@ public class Hand {
                 cards.size() == 5) {
 
                 rank = Constant.Ranks.ROYAL_FLUSH;
+                return;
 
         }
         
@@ -128,11 +153,14 @@ public class Hand {
         if(((histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0)
         	&& cards.size() == 7)
         	&&
-        	((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+        	(((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
                     && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
         	||
         	(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-		            && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
+		            && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))
+        	||
+        	(cards.get(1).getSuit().equals(cards.get(2).getSuit()) && cards.get(1).getSuit().equals(cards.get(3).getSuit())
+                        && cards.get(1).getSuit().equals(cards.get(4).getSuit()) && cards.get(1).getSuit().equals(cards.get(5).getSuit())))) {
 
 			rank = Constant.Ranks.ROYAL_FLUSH;
 			  
@@ -152,20 +180,33 @@ public class Hand {
 
             //If the straight flush is in a seven card hand, check to see if it is at the end of the hand:
             else if(cards.size() == 7) {
-                if(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())) {
+                if((cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit()))
+                		&&
+                		(((cards.get(2).getValue() == (cards.get(3).getValue()-1) && cards.get(3).getValue() == (cards.get(4).getValue()-1)
+                                && cards.get(4).getValue() == (cards.get(5).getValue()-1) && cards.get(5).getValue() == (cards.get(6).getValue()-1))))) {
                 	
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
                 
-                else if(cards.get(1).getSuit().equals(cards.get(2).getSuit()) && cards.get(1).getSuit().equals(cards.get(3).getSuit())
-                        && cards.get(1).getSuit().equals(cards.get(4).getSuit()) && cards.get(1).getSuit().equals(cards.get(5).getSuit())) {
+                else if((cards.get(1).getSuit().equals(cards.get(2).getSuit()) && cards.get(1).getSuit().equals(cards.get(3).getSuit())
+                        && cards.get(1).getSuit().equals(cards.get(4).getSuit()) && cards.get(1).getSuit().equals(cards.get(5).getSuit()))
+                		&&
+                		((cards.get(1).getValue() == (cards.get(2).getValue()-1) && cards.get(2).getValue() == (cards.get(3).getValue()-1)
+                                && cards.get(3).getValue() == (cards.get(4).getValue()-1) && cards.get(4).getValue() == (cards.get(5).getValue()-1)))) {
                 	
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
 
                 else {
-                    rank = Constant.Ranks.STRAIGHT;
+                	
+                	if(suitHistogram[0] >= 5 || suitHistogram[1] >= 5 || suitHistogram[2] >= 5 || suitHistogram[3] >= 5) {
+                		rank = Constant.Ranks.FLUSH;
+                	}
+                	
+                	else {
+                		rank = Constant.Ranks.STRAIGHT;
+                	}
                 }
             }
 
