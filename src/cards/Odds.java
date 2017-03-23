@@ -1,5 +1,7 @@
 package cards;
 
+import java.util.ArrayList;
+
 /**
  * Created by chloe Josien and Kylee Fluckiger
  * this class computes the odds for texas hold'em, an exhaustive solution
@@ -18,8 +20,45 @@ public class Odds {
      * @return a double percentage
      */
     public static double odds_to_win(int h1c1, int h1c2,
-                                     int h2c1, int h2h2, int samples){
-        return -1;
+                                     int h2c1, int h2c2, int samples){
+    	
+    	ArrayList<Card> handOne = new ArrayList<Card>();
+    	ArrayList<Card> handTwo = new ArrayList<Card>();
+        
+    	handOne.add(Deck.deck[h1c1]);
+    	handOne.add(Deck.deck[h1c2]);
+    	handTwo.add(Deck.deck[h2c1]);
+    	handTwo.add(Deck.deck[h2c2]);
+    	
+    	double playerOneWins = 0;
+    	
+    	for(int index=0; index<samples; index++) {
+    	
+    		Hand comparisonHand = new Hand(5);
+    		comparisonHand.getTwoRandomHands(handOne, handTwo);
+    		
+    		System.out.println(comparisonHand.cards);
+    		//System.out.print(comparisonHand.player1.rank);
+    		//System.out.println(comparisonHand.player2.rank);
+    		System.out.println(comparisonHand.player1.cards);
+    		System.out.println(comparisonHand.player2.cards);
+    		
+    		if(comparisonHand.player1.rank.getRankValue() > comparisonHand.player2.rank.getRankValue()) {
+    			playerOneWins++;
+    		}
+    		
+    		if(comparisonHand.player1.rank.getRankValue() == comparisonHand.player2.rank.getRankValue()) {
+    			if(comparisonHand.player1.value > comparisonHand.player2.value) {
+    				playerOneWins++;
+    			}
+    		}
+    		
+    		System.out.println(playerOneWins);
+
+    	}
+    	
+    	return (playerOneWins/(double)samples)*100;
+    	
     }
 
     /**
