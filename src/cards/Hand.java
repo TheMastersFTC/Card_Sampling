@@ -13,15 +13,15 @@ public class Hand {
 
     ArrayList<Card> cards = new ArrayList<>();
 
-    Card [] hand1 = new Card[7];
-    Card [] hand2 = new Card[7];
+    Hand player1;
+    Hand player2;
 
     int [] histogram= new int[14];
     int [] suitHistogram = new int[4];
 
     Constant.Ranks rank;
+    
     double value;
-
 
     /**
      * creates a random hand of cardNum
@@ -30,6 +30,10 @@ public class Hand {
     public Hand(int cardNum) {
 
         cards = this.getRandomHand(cardNum);
+        
+        this.sort();
+        this.rank();
+        this.value();
     }
 
     /**
@@ -130,14 +134,26 @@ public class Hand {
      * @param hand1
      * @param hand2
      */
-    public void getTwoRandomHands(Card [] hand1, Card [] hand2){
-        ArrayList<Card> tableHand = getRandomHand(7);
-        for(int num=0; num<tableHand.size(); num++){
-            hand1[num+2] = tableHand.get(num);
-            hand2[num+2] = tableHand.get(num);
+    public void getTwoRandomHands(ArrayList<Card> hand1, ArrayList<Card> hand2){
+    	
+    	ArrayList<Card> nextHand1 = new ArrayList<>();
+    	for(int index=0; index<2; index++) {
+    		nextHand1.add(hand1.get(index));
+    	}
+    	
+    	ArrayList<Card> nextHand2 = hand2;
+    	for(int index=0; index<2; index++) {
+    		nextHand2.add(hand2.get(index));
+    	}
+    	        
+        for(int num=0; num<cards.size(); num++){
+            nextHand1.add(cards.get(num));
+            nextHand2.add(cards.get(num));
         }
-        this.hand1=hand1;
-        this.hand2=hand2;
+        
+        player1 = new Hand(nextHand1.get(0), nextHand1.get(1), nextHand1.get(2), nextHand1.get(3), nextHand1.get(4), nextHand1.get(5), nextHand1.get(6));
+        player2 = new Hand(nextHand2.get(0), nextHand2.get(1), nextHand2.get(2), nextHand2.get(3), nextHand2.get(4), nextHand2.get(5), nextHand2.get(6));
+        
     }
 
     /**
