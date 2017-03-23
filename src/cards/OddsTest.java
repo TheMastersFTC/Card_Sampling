@@ -18,14 +18,14 @@ public class OddsTest {
 //    	}
 //    }
 
-    @Test
-    public void percentageExhaustiveTestSeven(){
-
-        double [] histogram = Odds.percentage_per_hand_category_exhaustive(7);
-        for(double bin : histogram) {
-            System.out.println(bin);
-        }
-    }
+//    @Test
+//    public void percentageExhaustiveTestSeven(){
+//
+//        double [] histogram = Odds.percentage_per_hand_category_exhaustive(7);
+//        for(double bin : histogram) {
+//            System.out.println(bin);
+//        }
+//    }
 
 //    @Test
 //    public void hierarchy() {
@@ -70,5 +70,12 @@ public class OddsTest {
 //    		System.out.println(bin);
 //    	}
 //    }
+	
+	@Test
+	public void texasHoldEm() {
+		
+		System.out.println(Odds.odds_to_win(25, 8, 50, 13, 100000));
+		
+	}
 
 }
