@@ -113,34 +113,34 @@ public class Hand {
     public void checkHandRank(){
 
         //Royal flush.
-        if((histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0)
+        if(histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0
                 &&
-                ((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
-                        && (cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()) && cards.size() !=7)))
-                ||
-                (((cards.size()==7) &&
-                        (cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                                && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())) 
-                        &&
-                        (cards.get(0).getValue() == 10) || cards.get(2).getValue() == 10))) {
+                (cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                        && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
+                &&
+                cards.size() == 5) {
 
-            //If the royal flush is the first five cards:
-            if(cards.size() == 5) {
                 rank = Constant.Ranks.ROYAL_FLUSH;
-            }
 
-
-            //If the royal flush is in a seven card hand, check to see if it is at the end of the hand:
-            else if(cards.size() == 7) {
-                if(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())) {
-                    rank = Constant.Ranks.ROYAL_FLUSH;
-                }
-            }
         }
+        
+        //Royal flush for seven card hands.
+        if(((histogram[9]>0 && histogram[10]>0 && histogram[11]>0 && histogram[12]>0 && histogram[13]>0)
+        	&& cards.size() == 7)
+        	&&
+        	((cards.get(0).getSuit().equals(cards.get(1).getSuit()) && cards.get(0).getSuit().equals(cards.get(2).getSuit())
+                    && cards.get(0).getSuit().equals(cards.get(3).getSuit()) && cards.get(0).getSuit().equals(cards.get(4).getSuit()))
+        	||
+        	(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
+		            && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())))) {
+
+			rank = Constant.Ranks.ROYAL_FLUSH;
+			  
+        }
+        	
 
         //Straight flush.
-        else if(longestStraight() == 5 ) {
+        else if(longestStraight() >= 5 ) {
 
             suitSort();
 
@@ -152,16 +152,16 @@ public class Hand {
 
             //If the straight flush is in a seven card hand, check to see if it is at the end of the hand:
             else if(cards.size() == 7) {
-                if(((cards.get(2).getSuit().equals(cards.get(3).getSuit())
-                        || cards.get(2).getSuit().equals(cards.get(4).getSuit())
-                        || cards.get(2).getSuit().equals(cards.get(5).getSuit()))
-                        &&
-                        (cards.get(3).getSuit().equals(cards.get(4).getSuit())
-                                || cards.get(3).getSuit().equals(cards.get(5).getSuit())
-                                ||cards.get(3).getSuit().equals(cards.get(6).getSuit())))) {
+                if(cards.get(2).getSuit().equals(cards.get(3).getSuit()) && cards.get(2).getSuit().equals(cards.get(4).getSuit())
+                        && cards.get(2).getSuit().equals(cards.get(5).getSuit()) && cards.get(2).getSuit().equals(cards.get(6).getSuit())) {
                 	
                     rank = Constant.Ranks.STRAIGHT_FLUSH;
+                }
                 
+                else if(cards.get(1).getSuit().equals(cards.get(2).getSuit()) && cards.get(1).getSuit().equals(cards.get(3).getSuit())
+                        && cards.get(1).getSuit().equals(cards.get(4).getSuit()) && cards.get(1).getSuit().equals(cards.get(5).getSuit())) {
+                	
+                    rank = Constant.Ranks.STRAIGHT_FLUSH;
                 }
 
                 else {
@@ -235,7 +235,9 @@ public class Hand {
 
         //Otherwise, it is a high-card hand.
         else {
-            rank = Constant.Ranks.HIGH_CARD_ONLY;
+
+        		rank = Constant.Ranks.HIGH_CARD_ONLY;
+        	
         }
 
     }
