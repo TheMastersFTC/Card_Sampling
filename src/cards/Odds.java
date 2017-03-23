@@ -82,10 +82,10 @@ public class Odds {
     	double [] histogram = new double[10];
     	
     	int totalHands = 0;
-    	
+    	    	
     	for(int index=0; index<random_samples; index++) {
     		
-			Hand hand = new Hand(hand_size);
+    		Hand hand = new Hand(hand_size);
 			histogram[hand.rank.ordinal()]++;
 			totalHands++;
 			System.out.println(index);
